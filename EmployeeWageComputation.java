@@ -1,75 +1,92 @@
 package com;
 
+import java.util.Scanner;
+
 /**
- * @author rekha
- *Variables Declaration
+ * Declaration
+ * Checking the condition working hours is less then or equal to max hours
+ * checking the condition working days is less then or equal to total working days 
+ * Generating 3 integer random numbers
+ * Calculating attendance and returning working hours
  */
 public class EmployeeWageComputation
 {
-	public static final int IS_FULL_TIME = 1;
-	public static final int IS_PART_TIME = 2;
-	public static final int HOURS_PER_DAY = 8;
-	public static final int WAGE_PER_HR = 20;
-	public static final int Total_Working_DAYS_For_MONTH = 20;
-	public static final int MAX_HRS_IN_MONTH = 100;
-	private static final int TOTAL_WORKING_DAYS_FOR_MONTHS = 20;
-	
-	/**
-	 * In while condition checking total working hours or days is reached for
-        a month - by assuming 100 hours and 20 days
-	 * Generating 0 to 3 random numbers using random function,
-     * checking and displaying if employee is part time present or
-         full time present or absent using switch case.
-     * Calculating employee total employee wage 
-     * Returning total totalEmpWage
-     */
-	
-	public static int maxWage() 
+    
+	public String CompanyName;
+	public int maxHours;
+	public int wagePerHour;
+	public int fullWorkingHour;
+	public int halfWorkingHour;
+	public int totalWorkingDays=0;
+	public EmployeeWageComputation()
 	{
-		int hrsPerDay = 0;
-		int totalEmpHrs = 0, totalWorkingDays = 0;
-		
-		while (totalEmpHrs <= MAX_HRS_IN_MONTH && 
-				totalWorkingDays < TOTAL_WORKING_DAYS_FOR_MONTHS)
+		this.CompanyName="";
+		this.maxHours= 0;
+		this.wagePerHour= 0;
+		this.fullWorkingHour= 0;
+		this.halfWorkingHour= 0;
+		this.totalWorkingDays= 0;
+	}
+public int Attendance(int MaxHours , int TotalWorkingDays,int FullWorkingHour,int HalfWaorkingHour) 
+{
+		int workingDays=0;
+		int workingHours=0;
+		while(workingHours <= MaxHours && workingDays <= TotalWorkingDays)
 		{
-				totalWorkingDays++;
-
-   		int random=(int)Math.floor(Math.random()*10) % 3;
-   		
-   		switch(random) 
-   		{
-
-   		case IS_FULL_TIME:
-				  hrsPerDay = 8;
-				  System.out.println("Employee is Present");
-	
-        		  		break;
-   
-   		case IS_PART_TIME:
-				  hrsPerDay = 4;
-				  System.out.println("Emloyee is Part time Present");
-         
-          		break;
-
-   		default:
-			hrsPerDay = 0;
-			System.out.println("Employee is absent");
-          		break;
+			workingDays++ ;
+			int attendance = (int) Math.floor(Math.random() * 10) % 3; 
+			switch (attendance)
+			{
+			case 1: 
+				workingHours=workingHours+FullWorkingHour;
+			break;
+			case 2: 
+				workingHours=workingHours+halfWorkingHour;
+				break;
+			case 3: 
+				workingHours = workingHours+0;
+			}
+			System.out.println("Total Working hours :");
+			System.out.println (workingHours);
 		}
-		totalEmpHrs += hrsPerDay; 
-		System.out.println("Day#: " + totalWorkingDays + "EmpHr: " + hrsPerDay);
-		}   		
-		int totalEmpWage = totalEmpHrs * WAGE_PER_HR;
-		return totalEmpWage;
-	} 
-	
-	/**
-     * calling maxWage method and printing or returning its result(totalEmpWage)
-     */
-	
-	
-	public static void main(String[] args)
-	{
-	System.out.println("The employer total daily wage is " +maxWage());
+		return workingHours;
+}
+
+/**
+ * writing CalculateWages Method
+ *calculating and displaying total salary of employee
+ */
+
+public void CalculateWages (int WagePerHour, int workingHours) 
+{
+	int totalSalary = ( WagePerHour * workingHours);
+	System.out.println("Total Wages of the employee :");
+	System.out.println (totalSalary);
+}
+
+/**
+ * creating EmployeeWageComputation object
+ * asking user to enter desired company details - name, Full Working hour, Maximum working hour
+ * Wage per hour, total working days
+ */
+
+public static void main(String[] args) {
+	EmployeeWageComputation emp = new EmployeeWageComputation();
+	Scanner scan = new Scanner(System.in);
+	System.out.println("Enter the company Name :");
+	emp.CompanyName=scan.nextLine();
+	scan.nextLine();	
+	System.out.println("Enter the Full Working hour :");
+	emp.fullWorkingHour=scan.nextInt();
+	System.out.println("Enter the half Working hour :");
+	emp.halfWorkingHour=scan.nextInt();
+	System.out.println("Enter the Maximum working hour :");
+	emp.maxHours=scan.nextInt();
+	System.out.println("Enter the Wage per hour :");
+	emp.wagePerHour=scan.nextInt();
+	System.out.println("Enter the total working days :");
+	emp.totalWorkingDays=scan.nextInt();	
+	int totalworkinghours=emp.Attendance(emp.maxHours,emp.totalWorkingDays,emp.fullWorkingHour,emp.halfWorkingHour);
+	emp.CalculateWages(emp.wagePerHour,totalworkinghours);
 	}
 }
